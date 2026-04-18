@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Music Audit — Sound You Can Feel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #080808;
+  --black-2: #0f0f0f;
+  --black-3: #161616;
+  --gold: #C9A84C;
+  --gold-light: #e0c070;
+  --gold-dim: rgba(201,168,76,0.10);
+  --gold-border: rgba(201,168,76,0.20);
+  --white: #f5f0e8;
+  --white-dim: rgba(245,240,232,0.55);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Montserrat', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--serif);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ─── HEADER ─── */
+.site-header {
+  text-align: center;
+  padding: 60px 24px 48px;
+  border-bottom: 1px solid var(--gold-border);
+}
+.site-header .wordmark {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.site-header h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.site-header .sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--white-dim);
+  text-transform: uppercase;
+}
+
+/* ─── CONTAINER ─── */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ─── FORM SECTION ─── */
+#form-section {
+  padding: 56px 0;
+}
+
+.form-intro {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.form-intro p {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--white-dim);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.form-group {
+  margin-bottom: 28px;
+}
+.form-group label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  background: var(--black-3);
+  border: 1px solid var(--gold-border);
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: 16px;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--gold);
+}
+.form-group textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.form-group .hint {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(245,240,232,0.35);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.azan-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--gold-border);
+  background: var(--gold-dim);
+  cursor: pointer;
+}
+.azan-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--gold);
+}
+.azan-row label {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--white-dim);
+  cursor: pointer;
+  margin: 0;
+}
+
+.submit-btn {
+  width: 100%;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 18px 32px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+.submit-btn:hover { background: var(--gold-light); }
+.submit-btn:active { transform: scale(0.99); }
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ─── LOADING ─── */
+#loading-section {
+  display: none;
+  text-align: center;
+  padding: 100px 0;
+}
+.loading-icon {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--gold-border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 32px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-section h2 {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+#loading-section p {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--white-dim);
+  text-transform: uppercase;
+}
+
+/* ─── RESULT SECTION ─── */
+#result-section {
+  display: none;
+  padding: 56px 0;
+}
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.btn-gold {
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-gold:hover { background: var(--gold-light); }
+.btn-outline {
+  background: transparent;
+  color: var(--white-dim);
+  border: 1px solid var(--gold-border);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--white); }
+
+.email-status {
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+  min-height: 20px;
+}
+.email-status.success { color: var(--gold); }
+.email-status.error { color: #e07070; }
+
+/* ─── PDF OUTPUT ─── */
+#pdf-output {
+  background: #fff;
+  color: #111;
+  font-family: Georgia, serif;
+  max-width: 720px;
+  margin: 0 auto;
+  border: 1px solid var(--gold-border);
+}
+
+.pdf-header {
+  background: #0a0a0a;
+  padding: 40px 48px;
+  text-align: center;
+}
+.pdf-header .pdf-wordmark {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin-bottom: 8px;
+}
+.pdf-header h1 {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  font-family: var(--serif);
+}
+.pdf-header .pdf-sub {
+  color: #888;
+  font-size: 12px;
+  font-family: var(--sans);
+  letter-spacing: 1px;
+}
+
+.pdf-business {
+  padding: 32px 48px 24px;
+  border-bottom: 1px solid #eee;
+}
+.pdf-business h2 {
+  font-size: 28px;
+  font-weight: 400;
+  color: #111;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+}
+.pdf-business .tagline {
+  color: #C9A84C;
+  font-style: italic;
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-family: var(--serif);
+}
+.pdf-business .biz-desc {
+  color: #666;
+  font-size: 13px;
+  font-family: var(--sans);
+}
+
+.pdf-section {
+  padding: 24px 48px;
+  border-bottom: 1px solid #eee;
+}
+.pdf-section-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 14px;
+}
+.pdf-section p {
+  color: #333;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.sonic-personality {
+  color: #333;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.direction-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: var(--sans);
+}
+.direction-table thead tr {
+  background: #f8f8f8;
+}
+.direction-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+.direction-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #444;
+  vertical-align: top;
+}
+.direction-table td:first-child {
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+}
+.direction-table td:last-child {
+  color: #888;
+  white-space: nowrap;
+}
+
+.track-item {
+  margin-bottom: 18px;
+}
+.track-item:last-child { margin-bottom: 0; }
+.track-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 4px;
+}
+.track-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+}
+
+.azan-note {
+  background: #fafafa;
+  padding: 16px 48px;
+  border-bottom: 1px solid #eee;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #666;
+}
+
+/* CTA Section */
+.pdf-cta {
+  padding: 32px 48px;
+  border-bottom: 1px solid #eee;
+}
+.pdf-cta .cta-intro {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.pdf-cta ul {
+  margin: 0 0 20px 18px;
+  padding: 0;
+  color: #444;
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 2.2;
+}
+.pdf-cta .cta-close {
+  font-size: 15px;
+  color: #222;
+  line-height: 1.8;
+  font-style: italic;
+  margin-bottom: 24px;
+}
+.cta-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cta-btn-dark {
+  display: inline-block;
+  background: #0a0a0a;
+  color: #C9A84C;
+  padding: 13px 24px;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.cta-btn-outline {
+  display: inline-block;
+  border: 1px solid #0a0a0a;
+  color: #0a0a0a;
+  padding: 13px 24px;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.pdf-footer {
+  background: #0a0a0a;
+  padding: 24px 48px;
+  text-align: center;
+}
+.pdf-footer p {
+  color: #C9A84C;
+  font-size: 13px;
+  margin-bottom: 4px;
+  font-family: var(--serif);
+}
+.pdf-footer .footer-sub {
+  color: #555;
+  font-size: 12px;
+  font-family: var(--sans);
+  letter-spacing: 1px;
+}
+
+/* ─── ERROR ─── */
+.error-msg {
+  text-align: center;
+  color: #e07070;
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 16px;
+  border: 1px solid rgba(224,112,112,0.3);
+  margin-top: 16px;
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .pdf-header, .pdf-business, .pdf-section, .pdf-cta, .pdf-footer { padding-left: 24px; padding-right: 24px; }
+  .site-header { padding: 40px 16px 36px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wordmark">Sound You Can Feel</div>
+  <h1>Free Music Audit</h1>
+  <div class="sub">Receive a bespoke music strategy for your venue</div>
+</header>
+
+<!-- FORM -->
+<div class="container">
+  <section id="form-section">
+    <div class="form-intro">
+      <p>Tell us about your business. We'll generate a tailored music strategy and send it directly to your inbox — complimentary, with our expertise.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="input-name" placeholder="Your full name">
+    </div>
+
+    <div class="form-group">
+      <label>Your Email</label>
+      <input type="email" id="input-email" placeholder="Where we'll send your strategy">
+    </div>
+
+    <div class="form-group">
+      <label>Location / Market</label>
+      <input type="text" id="input-location" placeholder="e.g. Dubai Marina, Riyadh, London">
+    </div>
+
+    <div class="form-group">
+      <label>Business Intelligence</label>
+      <textarea id="input-intel" placeholder="Tell us everything: business name, type of venue, website, Instagram, the vibe you're going for, your clientele, what makes you different. The more detail, the better the strategy."></textarea>
+      <div class="hint">Include: business name · venue type · website or social links · opening hours · target clientele · brand vibe</div>
+    </div>
+
+    <div class="form-group">
+      <div class="azan-row" onclick="document.getElementById('azan-check').click()">
+        <input type="checkbox" id="azan-check">
+        <label for="azan-check">Azan silence protocol required &nbsp;·&nbsp; GCC venue</label>
+      </div>
+    </div>
+
+    <div class="error-msg" id="form-error"></div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitForm()">
+      Generate My Music Strategy →
+    </button>
+  </section>
+
+  <!-- LOADING -->
+  <section id="loading-section">
+    <div class="loading-icon"></div>
+    <h2>Analysing your brand</h2>
+    <p>Building your bespoke strategy</p>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result-section">
+    <div class="email-status" id="email-status"></div>
+    <div class="result-actions">
+      <button class="btn-gold" onclick="downloadPDF()">Download PDF</button>
+      <button class="btn-outline" onclick="resetForm()">New Strategy ↺</button>
+    </div>
+    <div id="pdf-output"></div>
+    <div class="result-actions" style="margin-top:32px;margin-bottom:0;">
+      <button class="btn-gold" onclick="downloadPDF()">Download PDF</button>
+    </div>
+  </section>
+</div>
+
+<script>
+let currentStrategy = null;
+let currentClientName = '';
+let currentBusinessName = '';
+
+async function submitForm() {
+  const name = document.getElementById('input-name').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const location = document.getElementById('input-location').value.trim();
+  const intel = document.getElementById('input-intel').value.trim();
+  const azan = document.getElementById('azan-check').checked;
+  const errorEl = document.getElementById('form-error');
+
+  errorEl.style.display = 'none';
+
+  if (!name || !email || !location || !intel) {
+    errorEl.textContent = 'Please complete all fields before generating your strategy.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errorEl.textContent = 'Please enter a valid email address.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('form-section').style.display = 'none';
+  document.getElementById('loading-section').style.display = 'block';
+
+  try {
+    const res = await fetch('/api/strategy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, location, businessIntel: intel, azanRequired: azan })
+    });
+
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Strategy generation failed');
+
+    currentStrategy = data.strategy;
+    currentClientName = name;
+    currentBusinessName = data.strategy.businessName;
+
+    renderOutput(data.strategy, name, email);
+    sendEmail(data.strategy, name, email, location);
+
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('result-section').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  } catch (err) {
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('form-section').style.display = 'block';
+    errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+    errorEl.style.display = 'block';
+  }
+}
+
+function renderOutput(s, clientName, clientEmail) {
+  const timeZoneRows = s.timeZones.map(z => `
+    <tr>
+      <td>${z.label}</td>
+      <td>${z.mood}</td>
+      <td>${z.genres}</td>
+      <td>${z.bpm}</td>
+    </tr>`).join('');
+
+  const tracks = s.tracks.map((t, i) => `
+    <div class="track-item">
+      <div class="track-title">${i + 1}. ${t.artist} — ${t.title}</div>
+      <div class="track-desc">${t.description}</div>
+    </div>`).join('');
+
+  const azanSection = s.azanNote ? `<div class="azan-note">${s.azanNote}</div>` : '';
+
+  document.getElementById('pdf-output').innerHTML = `
+    <div class="pdf-header">
+      <div class="pdf-wordmark">Sound You Can Feel</div>
+      <h1>Music Strategy & Direction</h1>
+      <div class="pdf-sub">Kennedy · Dubai UAE · SYCF Global Curator Network</div>
+    </div>
+
+    <div class="pdf-business">
+      <h2>${s.businessName}</h2>
+      <div class="tagline">${s.tagline}</div>
+      <div class="biz-desc">${s.businessDescription}</div>
+    </div>
+
+    <div class="pdf-section">
+      <div class="pdf-section-label">Overview</div>
+      <p>${s.overview}</p>
+    </div>
+
+    <div class="pdf-section">
+      <div class="pdf-section-label">Sonic Personality</div>
+      <p class="sonic-personality">${s.sonicPersonality.join(' · ')}</p>
+    </div>
+
+    <div class="pdf-section">
+      <div class="pdf-section-label">Music Direction</div>
+      <table class="direction-table">
+        <thead>
+          <tr>
+            <th>Time</th><th>Mood</th><th>Genres</th><th>BPM</th>
+          </tr>
+        </thead>
+        <tbody>${timeZoneRows}</tbody>
+      </table>
+    </div>
+
+    <div class="pdf-section">
+      <div class="pdf-section-label">Sampler — 5 Reference Tracks</div>
+      ${tracks}
+    </div>
+
+    ${azanSection}
+
+    <div class="pdf-cta">
+      <div class="pdf-section-label">What We Handle For You</div>
+      <p class="cta-intro">Sound You Can Feel (SYCF) provides a fully automated music system and manages every aspect of your sonic environment:</p>
+      <ul>
+        <li>A bespoke soundscape that perfectly matches the mood throughout the day, every day</li>
+        <li>Monthly playlist refreshes — so it never gets stale</li>
+        <li>Compact digital music players, installed and configured</li>
+        <li>Fully licensed music content — zero legal exposure for you</li>
+        <li>Special playlists for events, seasons, and holidays</li>
+        <li>Automated Azan silence system</li>
+        <li>24/7 technical support</li>
+        <li>Music live within days of signing</li>
+      </ul>
+      <p class="cta-intro">We ensure the music consistently reflects <strong>${s.businessName}</strong>'s identity and keeps your guests feeling exactly the right way — with no stress or headache for you.</p>
+      <p class="cta-close">You have two choices. Take the strategy above and implement it yourself — or for just a few dollars a day, let SYCF manage your entire sonic environment. No stress, no headaches, no thinking about it ever again.</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/971585991639" class="cta-btn-dark">WhatsApp Kennedy</a>
+        <a href="mailto:kennedy@soundyoucanfeel.me" class="cta-btn-outline">Send Email</a>
+      </div>
+    </div>
+
+    <div class="pdf-footer">
+      <p>Kennedy · Music Director</p>
+      <div class="footer-sub">Sound You Can Feel · Dubai UAE · soundyoucanfeel.me</div>
+    </div>
+  `;
+}
+
+async function sendEmail(strategy, clientName, clientEmail, location) {
+  const statusEl = document.getElementById('email-status');
+  statusEl.textContent = 'Sending your strategy by email...';
+  statusEl.className = 'email-status';
+
+  try {
+    const res = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ strategy, clientName, clientEmail, location })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error);
+    statusEl.textContent = `Strategy sent to ${clientEmail}`;
+    statusEl.className = 'email-status success';
+  } catch (err) {
+    statusEl.textContent = 'Email delivery unavailable — please use the Download PDF button below.';
+    statusEl.className = 'email-status error';
+  }
+}
+
+function downloadPDF() {
+  const el = document.getElementById('pdf-output');
+  const filename = currentBusinessName
+    ? `${currentBusinessName.replace(/[^a-z0-9]/gi, '_')}_Music_Strategy.pdf`
+    : 'SYCF_Music_Strategy.pdf';
+
+  const opt = {
+    margin: 0,
+    filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(el).save();
+}
+
+function resetForm() {
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('form-section').style.display = 'block';
+  document.getElementById('input-name').value = '';
+  document.getElementById('input-email').value = '';
+  document.getElementById('input-location').value = '';
+  document.getElementById('input-intel').value = '';
+  document.getElementById('azan-check').checked = false;
+  document.getElementById('email-status').textContent = '';
+  document.getElementById('pdf-output').innerHTML = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
