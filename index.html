@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Music Audit — Sound You Can Feel</title>
-<meta name="description" content="Receive a bespoke music strategy for your venue. Complimentary from SYCF — Dubai's leading sonic branding consultancy.">
+<meta name="description" content="Receive a bespoke music strategy for your venue. Complimentary from SYCF.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -22,70 +22,91 @@
 html { scroll-behavior: smooth; }
 body { background: var(--black); color: var(--white); font-family: var(--serif); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* STEP 1 */
+/* ─── PROGRESS BAR ─── */
+.progress-bar { display: flex; width: 100%; height: 3px; position: fixed; top: 0; left: 0; z-index: 100; }
+.progress-bar span { flex: 1; background: rgba(201,168,76,0.15); transition: background 0.4s; }
+.progress-bar span.active { background: var(--gold); }
+.progress-bar span.done { background: rgba(201,168,76,0.4); }
+
+/* ─── STEP 1 (dark hero) ─── */
 #step-1 { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; position: relative; overflow: hidden; }
 .blob { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; mix-blend-mode: screen; }
 .blob-1 { width: 50vw; height: 50vw; top: 20%; left: 20%; background: rgba(201,168,76,0.06); animation: float 20s ease-in-out infinite; }
 .blob-2 { width: 35vw; height: 35vw; bottom: 15%; right: 15%; background: rgba(201,168,76,0.04); animation: float 26s ease-in-out infinite; animation-delay: -8s; }
 @keyframes float { 0%,100% { transform: translate(0,0); } 33% { transform: translate(10px,-20px); } 66% { transform: translate(-15px,10px); } }
-
 .hero-content { position: relative; z-index: 2; text-align: center; max-width: 780px; width: 100%; }
 .wordmark { font-family: var(--sans); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; display: block; }
 .hero-title { font-size: clamp(44px, 7vw, 76px); font-weight: 300; line-height: 1.05; margin-bottom: 14px; }
 .hero-title em { font-style: italic; color: var(--gold); }
 .hero-sub { font-family: var(--sans); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--white-dim); margin-bottom: 44px; }
-
-.inline-form { display: flex; gap: 0; width: 100%; max-width: 760px; margin: 0 auto 0; flex-wrap: wrap; }
-.inline-form input { flex: 1; min-width: 200px; background: var(--black-3); border: 1px solid var(--gold-border); border-right: none; color: var(--white); font-family: var(--serif); font-size: 15px; padding: 16px 20px; outline: none; transition: border-color 0.2s, background 0.2s; -webkit-appearance: none; border-radius: 0; }
+.inline-form { display: flex; gap: 0; width: 100%; max-width: 760px; margin: 0 auto; flex-wrap: wrap; }
+.inline-form input { flex: 1; min-width: 200px; background: var(--black-3); border: 1px solid var(--gold-border); border-right: none; color: var(--white); font-family: var(--serif); font-size: 15px; padding: 16px 20px; outline: none; transition: border-color 0.2s; -webkit-appearance: none; border-radius: 0; }
 .inline-form input:focus { background: var(--black-2); border-color: var(--gold); position: relative; z-index: 1; }
 .inline-form input::placeholder { color: rgba(245,240,232,0.28); font-size: 13px; }
-@media (max-width: 640px) {
-  .inline-form { flex-direction: column; }
-  .inline-form input { border-right: 1px solid var(--gold-border); border-bottom: none; }
-  .inline-form input:nth-child(3) { border-bottom: none; }
-}
-
+@media (max-width: 640px) { .inline-form { flex-direction: column; } .inline-form input { border-right: 1px solid var(--gold-border); border-bottom: none; } }
 .step1-btn { width: 100%; max-width: 760px; margin: 0 auto; display: block; background: var(--gold); color: var(--black); border: none; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 17px 32px; cursor: pointer; transition: background 0.2s; }
 .step1-btn:hover { background: var(--gold-light); }
-
 .error-inline { font-family: var(--sans); font-size: 11px; color: #e08080; margin-top: 10px; text-align: center; display: none; }
 .hero-note { font-family: var(--sans); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(245,240,232,0.22); margin-top: 20px; }
 
-/* STEP 2 */
+/* ─── STEP 2 (dark, business intel) ─── */
 #step-2 { display: none; min-height: 100vh; padding: 80px 24px; }
 .step2-inner { max-width: 660px; margin: 0 auto; }
 .back-btn { font-family: var(--sans); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--white-dim); background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 28px; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
 .back-btn:hover { color: var(--white); }
 .step2-inner h2 { font-size: clamp(30px, 4vw, 44px); font-weight: 300; margin-bottom: 8px; }
 .step2-inner > p { font-family: var(--sans); font-size: 11px; letter-spacing: 1px; color: var(--white-dim); margin-bottom: 32px; }
-
 .prefilled-summary { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
 .prefilled-tag { font-family: var(--sans); font-size: 10px; letter-spacing: 1.5px; color: var(--gold); border: 1px solid var(--gold-border); padding: 6px 14px; background: var(--gold-dim); }
-
 .form-group { margin-bottom: 24px; }
 .form-group label { display: block; font-family: var(--sans); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
 .form-group textarea { width: 100%; background: var(--black-3); border: 1px solid var(--gold-border); color: var(--white); font-family: var(--serif); font-size: 15px; padding: 16px 18px; outline: none; transition: border-color 0.2s; min-height: 160px; resize: vertical; line-height: 1.7; -webkit-appearance: none; border-radius: 0; }
 .form-group textarea:focus { border-color: var(--gold); }
 .form-group textarea::placeholder { color: rgba(245,240,232,0.25); font-size: 13px; }
 .form-group .hint { font-family: var(--sans); font-size: 10px; letter-spacing: 1px; color: rgba(245,240,232,0.3); margin-top: 8px; line-height: 1.6; }
-
 .azan-row { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--gold-border); background: var(--gold-dim); cursor: pointer; margin-bottom: 32px; }
 .azan-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
 .azan-row label { font-family: var(--sans); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white-dim); cursor: pointer; }
-
-.generate-btn { width: 100%; background: var(--gold); color: var(--black); border: none; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 32px; cursor: pointer; transition: background 0.2s; }
-.generate-btn:hover { background: var(--gold-light); }
-.generate-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.next-btn { width: 100%; background: var(--gold); color: var(--black); border: none; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 32px; cursor: pointer; transition: background 0.2s; }
+.next-btn:hover { background: var(--gold-light); }
+.next-btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .form-error { font-family: var(--sans); font-size: 11px; color: #e08080; margin-top: 12px; display: none; }
 
-/* LOADING */
+/* ─── STEP QUESTIONS (light chat) ─── */
+#step-questions { display: none; min-height: 100vh; background: #f2f0eb; padding: 60px 24px; }
+.chat-inner { max-width: 720px; margin: 0 auto; }
+.chat-step-label { font-family: var(--sans); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 24px; display: block; }
+.chat-messages { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
+.chat-bubble { display: flex; gap: 14px; align-items: flex-start; }
+.chat-bubble.user { flex-direction: row-reverse; }
+.chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: #111; color: #C9A84C; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 9px; font-weight: 600; letter-spacing: 1px; flex-shrink: 0; }
+.chat-avatar.user-av { background: var(--gold); color: #111; }
+.chat-text { background: #fff; border-radius: 16px; border-top-left-radius: 4px; padding: 16px 20px; max-width: 85%; font-size: 15px; line-height: 1.7; color: #222; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.chat-bubble.user .chat-text { background: #111; color: #f5f0e8; border-radius: 16px; border-top-right-radius: 4px; }
+.chat-typing { display: flex; align-items: center; gap: 5px; padding: 14px 18px; }
+.chat-typing span { width: 7px; height: 7px; background: #ccc; border-radius: 50%; animation: typing 1.2s infinite; }
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
+
+.chat-input-row { display: flex; gap: 0; background: #fff; border-radius: 999px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.chat-input-row input { flex: 1; border: none; outline: none; padding: 16px 22px; font-family: var(--serif); font-size: 15px; color: #222; background: transparent; }
+.chat-input-row input::placeholder { color: #bbb; }
+.chat-send-btn { width: 48px; height: 48px; background: #111; border: none; border-radius: 50%; margin: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.chat-send-btn:hover { background: #333; }
+.chat-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.generate-from-chat-btn { width: 100%; background: var(--gold); color: var(--black); border: none; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; padding: 18px 32px; cursor: pointer; transition: background 0.2s; margin-top: 20px; display: none; border-radius: 0; }
+.generate-from-chat-btn:hover { background: var(--gold-light); }
+
+/* ─── LOADING ─── */
 #step-loading { display: none; min-height: 100vh; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 48px; }
 .spinner { width: 44px; height: 44px; border: 1.5px solid var(--gold-border); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 32px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 #step-loading h2 { font-size: 28px; font-weight: 300; margin-bottom: 10px; }
 #step-loading p { font-family: var(--sans); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--white-dim); }
 
-/* RESULT */
+/* ─── RESULT ─── */
 #step-result { display: none; padding: 60px 24px; }
 .result-inner { max-width: 720px; margin: 0 auto; }
 .result-actions { display: flex; gap: 12px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
@@ -97,12 +118,11 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 .btn-outline { background: transparent; color: var(--white-dim); border: 1px solid var(--gold-border); font-family: var(--sans); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; padding: 13px 26px; cursor: pointer; transition: all 0.2s; }
 .btn-outline:hover { border-color: var(--gold); color: var(--white); }
 
-/* PDF OUTPUT */
+/* ─── PDF ─── */
 #pdf-output { background: #fff; color: #111; font-family: Georgia, serif; border: 1px solid var(--gold-border); }
 .pdf-hdr { background: #0a0a0a; padding: 36px 48px; text-align: center; }
 .pdf-hdr .pdf-wm { font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; margin-bottom: 8px; }
-.pdf-hdr h1 { color: #fff; font-size: 22px; font-weight: 400; letter-spacing: 1px; margin-bottom: 6px; font-family: Georgia,serif; }
-.pdf-hdr .pdf-sub { color: #888; font-size: 12px; font-family: Arial,sans-serif; letter-spacing: 1px; }
+.pdf-hdr h1 { color: #fff; font-size: 22px; font-weight: 400; letter-spacing: 1px; font-family: Georgia,serif; }
 .pdf-biz { padding: 28px 48px 20px; border-bottom: 1px solid #eee; }
 .pdf-biz h2 { font-size: 26px; font-weight: 400; color: #111; margin-bottom: 6px; font-family: Georgia,serif; }
 .pdf-biz .tagline { color: #C9A84C; font-style: italic; font-size: 15px; margin-bottom: 8px; }
@@ -132,12 +152,16 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 .pdf-ftr { background: #0a0a0a; padding: 22px 48px; text-align: center; }
 .pdf-ftr p { color: #C9A84C; font-size: 13px; margin-bottom: 3px; font-family: Georgia,serif; }
 .pdf-ftr .fs { color: #555; font-size: 11px; font-family: Arial,sans-serif; letter-spacing: 1px; }
-@media (max-width: 600px) {
-  .pdf-hdr,.pdf-biz,.pdf-sec,.pdf-cta,.pdf-ftr,.azan-blk { padding-left: 20px; padding-right: 20px; }
-}
+@media (max-width: 600px) { .pdf-hdr,.pdf-biz,.pdf-sec,.pdf-cta,.pdf-ftr,.azan-blk { padding-left: 20px; padding-right: 20px; } }
 </style>
 </head>
 <body>
+
+<div class="progress-bar" id="progress-bar">
+  <span id="pb-1"></span>
+  <span id="pb-2"></span>
+  <span id="pb-3"></span>
+</div>
 
 <!-- STEP 1 -->
 <div id="step-1">
@@ -161,7 +185,7 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 <!-- STEP 2 -->
 <div id="step-2">
   <div class="step2-inner">
-    <button class="back-btn" onclick="goBack()">
+    <button class="back-btn" onclick="goBack('step-1')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       Back
     </button>
@@ -177,16 +201,33 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
       <input type="checkbox" id="s2-azan">
       <label for="s2-azan">Azan silence protocol required &nbsp;·&nbsp; GCC venue</label>
     </div>
-    <button class="generate-btn" id="generate-btn" onclick="generateStrategy()">Start my FREE Music Audit →</button>
+    <button class="next-btn" id="next-btn" onclick="proceedToQuestions()">Continue →</button>
     <div class="form-error" id="s2-error"></div>
+  </div>
+</div>
+
+<!-- STEP QUESTIONS -->
+<div id="step-questions">
+  <div class="chat-inner">
+    <span class="chat-step-label">Step 2 — A few quick questions</span>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-row" id="chat-input-row">
+      <input type="text" id="chat-input" placeholder="Reply here..." onkeydown="if(event.key==='Enter')sendChatMessage()">
+      <button class="chat-send-btn" id="chat-send-btn" onclick="sendChatMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <button class="generate-from-chat-btn" id="generate-from-chat-btn" onclick="generateStrategy()">
+      Start my FREE Music Audit →
+    </button>
   </div>
 </div>
 
 <!-- LOADING -->
 <div id="step-loading">
   <div class="spinner"></div>
-  <h2>Analysing your brand</h2>
-  <p>Building your bespoke strategy</p>
+  <h2>Building your strategy</h2>
+  <p>This takes about 20 seconds</p>
 </div>
 
 <!-- RESULT -->
@@ -205,66 +246,162 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 </div>
 
 <script>
-let _name='',_email='',_location='',_strategy=null,_bizName='';
+let _name='', _email='', _location='', _intel='', _azan=false;
+let _chatHistory=[], _questionCount=0, _bizName='';
 
-function show(id){
-  ['step-1','step-2','step-loading','step-result'].forEach(s=>{
-    const el=document.getElementById(s);
-    el.style.display='none';
-  });
-  const t=document.getElementById(id);
-  t.style.display=id==='step-loading'?'flex':'block';
-  window.scrollTo({top:0,behavior:'smooth'});
+const ALL_STEPS = ['step-1','step-2','step-questions','step-loading','step-result'];
+
+function show(id) {
+  ALL_STEPS.forEach(s => { document.getElementById(s).style.display = 'none'; });
+  const el = document.getElementById(id);
+  el.style.display = id === 'step-loading' ? 'flex' : 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateProgress(id);
 }
 
-function proceedToStep2(){
-  const name=document.getElementById('s1-name').value.trim();
-  const email=document.getElementById('s1-email').value.trim();
-  const location=document.getElementById('s1-location').value.trim();
-  const err=document.getElementById('s1-error');
-  err.style.display='none';
-  if(!name||!email||!location){err.textContent='Please complete all three fields.';err.style.display='block';return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
-  _name=name;_email=email;_location=location;
-  document.getElementById('step2-greeting').innerHTML=`Hi ${name},<br>thank you for reaching out!`;
-  document.getElementById('prefilled-tags').innerHTML=
+function updateProgress(id) {
+  const map = { 'step-1': 1, 'step-2': 2, 'step-questions': 2, 'step-loading': 3, 'step-result': 3 };
+  const current = map[id] || 1;
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('pb-' + i);
+    el.className = i < current ? 'done' : i === current ? 'active' : '';
+  }
+}
+
+function proceedToStep2() {
+  const name     = document.getElementById('s1-name').value.trim();
+  const email    = document.getElementById('s1-email').value.trim();
+  const location = document.getElementById('s1-location').value.trim();
+  const err      = document.getElementById('s1-error');
+  err.style.display = 'none';
+  if (!name || !email || !location) { err.textContent = 'Please complete all three fields.'; err.style.display = 'block'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email address.'; err.style.display = 'block'; return; }
+  _name = name; _email = email; _location = location;
+  document.getElementById('step2-greeting').innerHTML = `Hi ${name},<br>thank you for reaching out!`;
+  document.getElementById('prefilled-tags').innerHTML =
     `<span class="prefilled-tag">${name}</span><span class="prefilled-tag">${email}</span><span class="prefilled-tag">${location}</span>`;
   show('step-2');
 }
 
-function goBack(){show('step-1');}
+function goBack(step) { show(step); }
 
-async function generateStrategy(){
-  const intel=document.getElementById('s2-intel').value.trim();
-  const azan=document.getElementById('s2-azan').checked;
-  const err=document.getElementById('s2-error');
-  err.style.display='none';
-  if(!intel){err.textContent='Please tell us about your business before generating.';err.style.display='block';return;}
-  document.getElementById('generate-btn').disabled=true;
-  show('step-loading');
-  try{
-    const res=await fetch('/api/strategy',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name:_name,email:_email,location:_location,businessIntel:intel,azanRequired:azan})});
-    const data=await res.json();
-    if(!res.ok||data.error)throw new Error(data.error||'Generation failed');
-    _strategy=data.strategy;_bizName=data.strategy.businessName;
-    renderOutput(data.strategy);
-    sendEmail(data.strategy);
-    show('step-result');
-  }catch(err2){
-    show('step-2');
-    document.getElementById('generate-btn').disabled=false;
-    const e=document.getElementById('s2-error');
-    e.textContent=err2.message||'Something went wrong. Please try again.';
-    e.style.display='block';
+async function proceedToQuestions() {
+  const intel = document.getElementById('s2-intel').value.trim();
+  const err   = document.getElementById('s2-error');
+  err.style.display = 'none';
+  if (!intel) { err.textContent = 'Please tell us about your business first.'; err.style.display = 'block'; return; }
+  _intel = intel;
+  _azan  = document.getElementById('s2-azan').checked;
+  document.getElementById('next-btn').disabled = true;
+  show('step-questions');
+  document.getElementById('chat-messages').innerHTML = '';
+  _chatHistory = [];
+  _questionCount = 0;
+  await askQuestion();
+}
+
+function addBubble(text, isUser) {
+  const msgs = document.getElementById('chat-messages');
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble' + (isUser ? ' user' : '');
+  bubble.innerHTML = `
+    <div class="chat-avatar ${isUser ? 'user-av' : ''}">${isUser ? _name.charAt(0).toUpperCase() : 'SC'}</div>
+    <div class="chat-text">${text.replace(/\n/g, '<br>')}</div>`;
+  msgs.appendChild(bubble);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const el = document.createElement('div');
+  el.className = 'chat-bubble';
+  el.id = 'typing-indicator';
+  el.innerHTML = `<div class="chat-avatar">SC</div><div class="chat-text chat-typing"><span></span><span></span><span></span></div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+async function askQuestion() {
+  document.getElementById('chat-send-btn').disabled = true;
+  showTyping();
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ businessIntel: _intel, chatHistory: _chatHistory, questionCount: _questionCount })
+    });
+    const data = await res.json();
+    removeTyping();
+    if (!res.ok || data.error) throw new Error(data.error || 'Chat failed');
+
+    _chatHistory.push({ role: 'assistant', content: data.text });
+    addBubble(data.text, false);
+
+    if (data.done) {
+      document.getElementById('chat-input-row').style.display = 'none';
+      document.getElementById('generate-from-chat-btn').style.display = 'block';
+    } else {
+      document.getElementById('chat-send-btn').disabled = false;
+      document.getElementById('chat-input').focus();
+    }
+  } catch (err) {
+    removeTyping();
+    addBubble('Sorry, something went wrong. Please try again.', false);
+    document.getElementById('chat-send-btn').disabled = false;
   }
 }
 
-function renderOutput(s){
-  const rows=s.timeZones.map(z=>`<tr><td>${z.label}</td><td>${z.mood}</td><td>${z.genres}</td><td>${z.bpm}</td></tr>`).join('');
-  const tracks=s.tracks.map((t,i)=>`<div class="trk"><div class="trk-t">${i+1}. ${t.artist} — ${t.title}</div><div class="trk-d">${t.description}</div></div>`).join('');
-  const azanBlk=s.azanNote?`<div class="azan-blk">${s.azanNote}</div>`:'';
-  document.getElementById('pdf-output').innerHTML=`
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text  = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addBubble(text, true);
+  _chatHistory.push({ role: 'user', content: text });
+  _questionCount++;
+  await askQuestion();
+}
+
+async function generateStrategy() {
+  document.getElementById('generate-from-chat-btn').disabled = true;
+  show('step-loading');
+
+  const chatContext = _chatHistory
+    .map(m => `${m.role === 'assistant' ? 'SYCF' : _name}: ${m.content}`)
+    .join('\n');
+
+  const fullIntel = `${_intel}\n\nAdditional context from conversation:\n${chatContext}`;
+
+  try {
+    const res = await fetch('/api/strategy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: _name, email: _email, location: _location, businessIntel: fullIntel, azanRequired: _azan })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Generation failed');
+    _bizName = data.strategy.businessName;
+    renderOutput(data.strategy);
+    sendEmail(data.strategy);
+    show('step-result');
+  } catch (err) {
+    show('step-questions');
+    document.getElementById('generate-from-chat-btn').disabled = false;
+    addBubble('Sorry, something went wrong generating your strategy. Please try again.', false);
+    document.getElementById('generate-from-chat-btn').style.display = 'block';
+  }
+}
+
+function renderOutput(s) {
+  const rows   = s.timeZones.map(z => `<tr><td>${z.label}</td><td>${z.mood}</td><td>${z.genres}</td><td>${z.bpm}</td></tr>`).join('');
+  const tracks = s.tracks.map((t,i) => `<div class="trk"><div class="trk-t">${i+1}. ${t.artist} — ${t.title}</div><div class="trk-d">${t.description}</div></div>`).join('');
+  const azanBlk = s.azanNote ? `<div class="azan-blk">${s.azanNote}</div>` : '';
+  document.getElementById('pdf-output').innerHTML = `
     <div class="pdf-hdr"><div class="pdf-wm">Sound You Can Feel</div><h1>Music Strategy & Direction</h1></div>
     <div class="pdf-biz"><h2>${s.businessName}</h2><div class="tagline">${s.tagline}</div><div class="biz-desc">${s.businessDescription}</div></div>
     <div class="pdf-sec"><div class="pdf-lbl">Overview</div><p>${s.overview}</p></div>
@@ -296,50 +433,53 @@ function renderOutput(s){
     <div class="pdf-ftr"><p>Kennedy · Music Director</p><div class="fs">Sound You Can Feel · Dubai UAE · soundyoucanfeel.me</div></div>`;
 }
 
-async function sendEmail(strategy){
-  const st=document.getElementById('email-status');
-  st.textContent='Sending your strategy by email...';st.className='email-status';
-  try{
-    const res=await fetch('/api/send-email',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({strategy,clientName:_name,clientEmail:_email,location:_location})});
-    const data=await res.json();
-    if(!res.ok||data.error)throw new Error(data.error);
-    st.textContent=`Strategy sent to ${_email}`;st.className='email-status ok';
-  }catch{
-    st.textContent='Email unavailable — use Download PDF below.';st.className='email-status err';
-  }
+async function sendEmail(strategy) {
+  const st = document.getElementById('email-status');
+  st.textContent = 'Sending your strategy by email...'; st.className = 'email-status';
+  try {
+    const res = await fetch('/api/send-email', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ strategy, clientName: _name, clientEmail: _email, location: _location })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error);
+    st.textContent = `Strategy sent to ${_email}`; st.className = 'email-status ok';
+  } catch { st.textContent = 'Email unavailable — use Download PDF below.'; st.className = 'email-status err'; }
 }
 
-function downloadPDF(){
-  const el=document.getElementById('pdf-output');
-  const fn=_bizName?`${_bizName.replace(/[^a-z0-9]/gi,'_')}_Music_Strategy.pdf`:'SYCF_Music_Strategy.pdf';
-  html2pdf().set({margin:0,filename:fn,image:{type:'jpeg',quality:0.98},
-    html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff'},
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}}).from(el).save();
+function downloadPDF() {
+  const el = document.getElementById('pdf-output');
+  const fn = _bizName ? `${_bizName.replace(/[^a-z0-9]/gi,'_')}_Music_Strategy.pdf` : 'SYCF_Music_Strategy.pdf';
+  html2pdf().set({ margin: 0, filename: fn, image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(el).save();
 }
 
-function resetAll(){
-  _name='';_email='';_location='';_strategy=null;_bizName='';
-  ['s1-name','s1-email','s1-location'].forEach(id=>document.getElementById(id).value='');
+function resetAll() {
+  _name=''; _email=''; _location=''; _intel=''; _azan=false; _chatHistory=[]; _questionCount=0; _bizName='';
+  ['s1-name','s1-email','s1-location'].forEach(id => document.getElementById(id).value='');
   document.getElementById('s2-intel').value='';
   document.getElementById('s2-azan').checked=false;
-  document.getElementById('generate-btn').disabled=false;
+  document.getElementById('next-btn').disabled=false;
+  document.getElementById('generate-from-chat-btn').disabled=false;
+  document.getElementById('generate-from-chat-btn').style.display='none';
+  document.getElementById('chat-input-row').style.display='flex';
   document.getElementById('pdf-output').innerHTML='';
   document.getElementById('email-status').textContent='';
   show('step-1');
 }
 
-// Pre-fill from URL params (coming from main site)
-const _params = new URLSearchParams(window.location.search);
-const _pName  = _params.get('name');
-const _pEmail = _params.get('email');
-const _pLoc   = _params.get('location');
+// Init — check URL params
+const _params   = new URLSearchParams(window.location.search);
+const _pName    = _params.get('name');
+const _pEmail   = _params.get('email');
+const _pLoc     = _params.get('location');
 if (_pName && _pEmail && _pLoc) {
   document.getElementById('s1-name').value     = _pName;
   document.getElementById('s1-email').value    = _pEmail;
   document.getElementById('s1-location').value = _pLoc;
   _name = _pName; _email = _pEmail; _location = _pLoc;
-  document.getElementById('step2-greeting').innerHTML=`Hi ${_pName},<br>thank you for reaching out!`;
+  document.getElementById('step2-greeting').innerHTML = `Hi ${_pName},<br>thank you for reaching out!`;
   document.getElementById('prefilled-tags').innerHTML =
     `<span class="prefilled-tag">${_pName}</span><span class="prefilled-tag">${_pEmail}</span><span class="prefilled-tag">${_pLoc}</span>`;
   show('step-2');
