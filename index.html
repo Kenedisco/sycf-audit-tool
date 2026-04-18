@@ -137,10 +137,13 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 .dir-tbl td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; color: #444; vertical-align: top; }
 .dir-tbl td:first-child { font-weight: 600; color: #222; white-space: nowrap; }
 .dir-tbl td:last-child { color: #888; white-space: nowrap; }
-.trk { margin-bottom: 16px; }
+.trk { margin-bottom: 16px; position: relative; }
 .trk:last-child { margin-bottom: 0; }
 .trk-t { font-family: Arial,sans-serif; font-size: 12px; font-weight: 700; color: #222; margin-bottom: 3px; }
 .trk-d { font-size: 13px; color: #555; line-height: 1.7; }
+.trk-swap { margin-top: 6px; background: none; border: 1px solid #ddd; color: #999; font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; cursor: pointer; transition: all 0.2s; border-radius: 3px; }
+.trk-swap:hover { border-color: #C9A84C; color: #C9A84C; }
+.trk-swap:disabled { opacity: 0.4; cursor: not-allowed; }
 .azan-blk { background: #fafafa; padding: 14px 48px; border-bottom: 1px solid #eee; font-family: Arial,sans-serif; font-size: 12px; color: #666; }
 .pdf-cta { padding: 24px 48px; border-bottom: 1px solid #eee; }
 .pdf-cta .ci { font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 14px; }
@@ -247,7 +250,7 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 
 <script>
 let _name='', _email='', _location='', _intel='', _azan=false;
-let _chatHistory=[], _questionCount=0, _bizName='';
+let _chatHistory=[], _questionCount=0, _bizName='', _currentTracks=[], _currentStrategy=null;
 
 const ALL_STEPS = ['step-1','step-2','step-questions','step-loading','step-result'];
 
@@ -398,8 +401,10 @@ async function generateStrategy() {
 }
 
 function renderOutput(s) {
-  const rows   = s.timeZones.map(z => `<tr><td>${z.label}</td><td>${z.mood}</td><td>${z.genres}</td><td>${z.bpm}</td></tr>`).join('');
-  const tracks = s.tracks.map((t,i) => `<div class="trk"><div class="trk-t">${i+1}. ${t.artist} — ${t.title}</div><div class="trk-d">${t.description}</div></div>`).join('');
+  _currentStrategy = s;
+  _currentTracks = [...s.tracks];
+  renderTracks();
+  const rows = s.timeZones.map(z => `<tr><td>${z.label}</td><td>${z.mood}</td><td>${z.genres}</td><td>${z.bpm}</td></tr>`).join('');
   const azanBlk = s.azanNote ? `<div class="azan-blk">${s.azanNote}</div>` : '';
   document.getElementById('pdf-output').innerHTML = `
     <div class="pdf-hdr"><div class="pdf-wm">Sound You Can Feel</div><h1>Music Strategy & Direction</h1></div>
@@ -409,7 +414,7 @@ function renderOutput(s) {
     <div class="pdf-sec"><div class="pdf-lbl">Music Direction</div>
       <table class="dir-tbl"><thead><tr><th>Time</th><th>Mood</th><th>Genres</th><th>BPM</th></tr></thead><tbody>${rows}</tbody></table>
     </div>
-    <div class="pdf-sec"><div class="pdf-lbl">Sampler — 5 Reference Tracks</div>${tracks}</div>
+    <div class="pdf-sec" id="tracks-section"><div class="pdf-lbl">Sampler — 5 Reference Tracks</div><div id="tracks-list"></div></div>
     ${azanBlk}
     <div class="pdf-cta"><div class="pdf-lbl">What We Handle For You</div>
       <p class="ci">Sound You Can Feel (SYCF) provides a fully automated music system and manages every aspect of your sonic environment:</p>
@@ -431,6 +436,44 @@ function renderOutput(s) {
       </div>
     </div>
     <div class="pdf-ftr"><p>Kennedy · Music Director</p><div class="fs">Sound You Can Feel · Dubai UAE · soundyoucanfeel.me</div></div>`;
+  renderTracks();
+}
+
+function renderTracks() {
+  const container = document.getElementById('tracks-list');
+  if (!container) return;
+  container.innerHTML = _currentTracks.map((t, i) => `
+    <div class="trk" id="trk-${i}">
+      <div class="trk-t">${i+1}. ${t.artist} — ${t.title}</div>
+      <div class="trk-d">${t.description}</div>
+      <button class="trk-swap" id="swap-btn-${i}" onclick="swapTrack(${i})">↻ Swap</button>
+    </div>`).join('');
+}
+
+async function swapTrack(index) {
+  const btn = document.getElementById(`swap-btn-${index}`);
+  const trk = document.getElementById(`trk-${index}`);
+  btn.disabled = true;
+  btn.textContent = '...';
+  try {
+    const res = await fetch('/api/swap-track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        businessName: _currentStrategy.businessName,
+        businessIntel: _intel,
+        currentTracks: _currentTracks,
+        trackIndex: index
+      })
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error);
+    _currentTracks[index] = data.track;
+    renderTracks();
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = '↻ Swap';
+  }
 }
 
 async function sendEmail(strategy) {
@@ -456,7 +499,7 @@ function downloadPDF() {
 }
 
 function resetAll() {
-  _name=''; _email=''; _location=''; _intel=''; _azan=false; _chatHistory=[]; _questionCount=0; _bizName='';
+  _name=''; _email=''; _location=''; _intel=''; _azan=false; _chatHistory=[]; _questionCount=0; _bizName=''; _currentTracks=[]; _currentStrategy=null;
   ['s1-name','s1-email','s1-location'].forEach(id => document.getElementById(id).value='');
   document.getElementById('s2-intel').value='';
   document.getElementById('s2-azan').checked=false;
