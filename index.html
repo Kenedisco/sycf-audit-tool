@@ -165,11 +165,11 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       Back
     </button>
-    <h2>Tell us about<br>your business.</h2>
-    <p>The more detail you give us, the sharper your strategy.</p>
+    <h2 id="step2-greeting">Hi there,<br>thank you for reaching out!</h2>
+    <p>Please share some details about your business so we can build your bespoke music strategy.</p>
     <div class="prefilled-summary" id="prefilled-tags"></div>
     <div class="form-group">
-      <label>Business Intelligence</label>
+      <label>About Your Business</label>
       <textarea id="s2-intel" placeholder="Business name, venue type, website or Instagram, opening hours, your clientele, the vibe you're going for — anything that helps us understand your brand."></textarea>
       <div class="hint">Include: venue name · type · website or socials · opening hours · target clientele · brand vibe</div>
     </div>
@@ -177,7 +177,7 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
       <input type="checkbox" id="s2-azan">
       <label for="s2-azan">Azan silence protocol required &nbsp;·&nbsp; GCC venue</label>
     </div>
-    <button class="generate-btn" id="generate-btn" onclick="generateStrategy()">Generate My Strategy →</button>
+    <button class="generate-btn" id="generate-btn" onclick="generateStrategy()">Click Here for Your Strategy →</button>
     <div class="form-error" id="s2-error"></div>
   </div>
 </div>
@@ -226,6 +226,7 @@ function proceedToStep2(){
   if(!name||!email||!location){err.textContent='Please complete all three fields.';err.style.display='block';return;}
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.style.display='block';return;}
   _name=name;_email=email;_location=location;
+  document.getElementById('step2-greeting').innerHTML=`Hi ${name},<br>thank you for reaching out!`;
   document.getElementById('prefilled-tags').innerHTML=
     `<span class="prefilled-tag">${name}</span><span class="prefilled-tag">${email}</span><span class="prefilled-tag">${location}</span>`;
   show('step-2');
@@ -338,6 +339,7 @@ if (_pName && _pEmail && _pLoc) {
   document.getElementById('s1-email').value    = _pEmail;
   document.getElementById('s1-location').value = _pLoc;
   _name = _pName; _email = _pEmail; _location = _pLoc;
+  document.getElementById('step2-greeting').innerHTML=`Hi ${_pName},<br>thank you for reaching out!`;
   document.getElementById('prefilled-tags').innerHTML =
     `<span class="prefilled-tag">${_pName}</span><span class="prefilled-tag">${_pEmail}</span><span class="prefilled-tag">${_pLoc}</span>`;
   show('step-2');
