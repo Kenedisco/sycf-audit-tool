@@ -265,7 +265,7 @@ function renderOutput(s){
   const tracks=s.tracks.map((t,i)=>`<div class="trk"><div class="trk-t">${i+1}. ${t.artist} — ${t.title}</div><div class="trk-d">${t.description}</div></div>`).join('');
   const azanBlk=s.azanNote?`<div class="azan-blk">${s.azanNote}</div>`:'';
   document.getElementById('pdf-output').innerHTML=`
-    <div class="pdf-hdr"><div class="pdf-wm">Sound You Can Feel</div><h1>Music Strategy & Direction</h1><div class="pdf-sub">Kennedy · Dubai UAE · SYCF Global Curator Network</div></div>
+    <div class="pdf-hdr"><div class="pdf-wm">Sound You Can Feel</div><h1>Music Strategy & Direction</h1></div>
     <div class="pdf-biz"><h2>${s.businessName}</h2><div class="tagline">${s.tagline}</div><div class="biz-desc">${s.businessDescription}</div></div>
     <div class="pdf-sec"><div class="pdf-lbl">Overview</div><p>${s.overview}</p></div>
     <div class="pdf-sec"><div class="pdf-lbl">Sonic Personality</div><p class="sonic-p">${s.sonicPersonality.join(' · ')}</p></div>
