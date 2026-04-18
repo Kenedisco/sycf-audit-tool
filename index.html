@@ -328,7 +328,22 @@ function resetAll(){
   show('step-1');
 }
 
-show('step-1');
+// Pre-fill from URL params (coming from main site)
+const _params = new URLSearchParams(window.location.search);
+const _pName  = _params.get('name');
+const _pEmail = _params.get('email');
+const _pLoc   = _params.get('location');
+if (_pName && _pEmail && _pLoc) {
+  document.getElementById('s1-name').value     = _pName;
+  document.getElementById('s1-email').value    = _pEmail;
+  document.getElementById('s1-location').value = _pLoc;
+  _name = _pName; _email = _pEmail; _location = _pLoc;
+  document.getElementById('prefilled-tags').innerHTML =
+    `<span class="prefilled-tag">${_pName}</span><span class="prefilled-tag">${_pEmail}</span><span class="prefilled-tag">${_pLoc}</span>`;
+  show('step-2');
+} else {
+  show('step-1');
+}
 </script>
 </body>
 </html>
