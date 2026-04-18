@@ -67,6 +67,7 @@ Rules:
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 2000,
+        system: 'You are a music strategy JSON generator. You ONLY output valid JSON. Never ask questions. Never write conversational text. Never use markdown. Output ONLY the JSON object requested, nothing else.',
         messages: [{ role: 'user', content: prompt }]
       })
     });
