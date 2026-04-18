@@ -52,7 +52,7 @@ Generate the strategy as a JSON object with EXACTLY this structure:
 
 Rules:
 - timeZones: generate 3-5 zones appropriate to the venue's operating hours and type
-- tracks: exactly 5 reference tracks — real artists, real tracks, expertly chosen for this specific brand
+- tracks: exactly 5 reference tracks — chosen with surgical precision for THIS specific brand. Consider the venue's cuisine/culture, clientele demographic, geographic market, energy level, and brand positioning. A Latin-Japanese fusion restaurant needs tracks that reflect that fusion. A luxury spa in Riyadh needs completely different tracks to a beach club in Ibiza. Go deep — avoid defaulting to obvious "safe luxury BGM" artists. Draw from the full breadth of your music knowledge: explore subgenres, regional scenes, specific cultural influences relevant to this brand. Each track must have a clear, specific reason why it fits THIS venue and not any other.
 - Tone throughout: luxury, expert, specific — never generic
 - Respond ONLY with the JSON object, no markdown, no preamble`;
 

@@ -17,7 +17,7 @@ Brief: ${businessIntel}
 Current reference tracks:
 ${currentList}
 
-Track ${trackIndex + 1} needs to be replaced. Generate ONE different track that fits this venue perfectly. It must be different from all tracks listed above.
+Track ${trackIndex + 1} needs to be replaced. Generate ONE track that fits this specific venue — consider its culture, clientele, energy, and market. Go deeper than the obvious choices. The replacement must be meaningfully different from all tracks already listed and must have a clear reason why it fits THIS venue specifically.
 
 Respond ONLY with a JSON object:
 {
