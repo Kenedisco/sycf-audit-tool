@@ -56,8 +56,17 @@ Otherwise respond with plain text — your next question. No JSON unless done. N
     const cleanText = text.replace(/```json[\s\S]*?```|```/g, '').trim();
     try {
       const parsed = JSON.parse(cleanText);
-      if (parsed.done) return res.status(200).json({ done: true, summary: parsed.summary, text });
+      if (parsed.done) return res.status(200).json({ done: true, summary: parsed.summary, text: text.replace(cleanText, '').trim() || '' });
     } catch (_) {}
+
+    // Also check if response ends with JSON done block mixed into text
+    const doneMatch = text.match(/\{[\s\S]*"done"\s*:\s*true[\s\S]*\}/);
+    if (doneMatch) {
+      const questionText = text.replace(doneMatch[0], '').trim();
+      let summary = '';
+      try { summary = JSON.parse(doneMatch[0]).summary || ''; } catch (_) {}
+      return res.status(200).json({ done: true, summary, text: questionText });
+    }
 
     // Force done after 3 questions
     if (questionCount >= 2) {
