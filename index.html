@@ -120,16 +120,16 @@ body { background: var(--black); color: var(--white); font-family: var(--serif);
 
 /* ─── PDF ─── */
 #pdf-output { background: #fff; color: #111; font-family: Georgia, serif; border: 1px solid var(--gold-border); }
-.pdf-hdr { background: #0a0a0a; padding: 36px 48px; text-align: center; }
-.pdf-hdr .pdf-wm { font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; margin-bottom: 8px; }
-.pdf-hdr h1 { color: #fff; font-size: 22px; font-weight: 400; letter-spacing: 1px; font-family: Georgia,serif; }
-.pdf-biz { padding: 28px 48px 20px; border-bottom: 1px solid #eee; }
-.pdf-biz h2 { font-size: 26px; font-weight: 400; color: #111; margin-bottom: 6px; font-family: Georgia,serif; }
-.pdf-biz .tagline { color: #C9A84C; font-style: italic; font-size: 15px; margin-bottom: 8px; }
-.pdf-biz .biz-desc { color: #666; font-size: 13px; font-family: Arial,sans-serif; }
-.pdf-sec { padding: 22px 48px; border-bottom: 1px solid #eee; }
-.pdf-lbl { font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 12px; }
-.pdf-sec p { color: #333; font-size: 14px; line-height: 1.8; }
+.pdf-hdr { background: #0a0a0a; padding: 24px 48px; text-align: center; page-break-inside: avoid; }
+.pdf-hdr .pdf-wm { font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #C9A84C; margin-bottom: 6px; }
+.pdf-hdr h1 { color: #fff; font-size: 20px; font-weight: 400; letter-spacing: 1px; font-family: Georgia,serif; }
+.pdf-biz { padding: 20px 48px 16px; border-bottom: 1px solid #eee; page-break-inside: avoid; }
+.pdf-biz h2 { font-size: 24px; font-weight: 400; color: #111; margin-bottom: 4px; font-family: Georgia,serif; }
+.pdf-biz .tagline { color: #C9A84C; font-style: italic; font-size: 14px; margin-bottom: 6px; }
+.pdf-biz .biz-desc { color: #666; font-size: 12px; font-family: Arial,sans-serif; }
+.pdf-sec { padding: 16px 48px; border-bottom: 1px solid #eee; page-break-inside: avoid; }
+.pdf-lbl { font-family: Arial,sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
+.pdf-sec p { color: #333; font-size: 13px; line-height: 1.7; }
 .sonic-p { font-style: italic; }
 .dir-tbl { width: 100%; border-collapse: collapse; font-size: 13px; font-family: Arial,sans-serif; }
 .dir-tbl thead tr { background: #f8f8f8; }
@@ -493,9 +493,14 @@ async function sendEmail(strategy) {
 function downloadPDF() {
   const el = document.getElementById('pdf-output');
   const fn = _bizName ? `${_bizName.replace(/[^a-z0-9]/gi,'_')}_Music_Strategy.pdf` : 'SYCF_Music_Strategy.pdf';
-  html2pdf().set({ margin: 0, filename: fn, image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } }).from(el).save();
+  html2pdf().set({
+    margin: [8, 0, 8, 0],
+    filename: fn,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: 794 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  }).from(el).save();
 }
 
 function resetAll() {
