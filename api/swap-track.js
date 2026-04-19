@@ -17,7 +17,7 @@ Brief: ${businessIntel}
 Current reference tracks:
 ${currentList}
 
-Track ${trackIndex + 1} needs to be replaced. Generate ONE track that fits this specific venue — consider its culture, clientele, energy, and market. Go deeper than the obvious choices. The replacement must be meaningfully different from all tracks already listed and must have a clear reason why it fits THIS venue specifically.
+Track ${trackIndex + 1} needs to be replaced. Generate ONE track that genuinely fits this brand's identity and concept. CRITICAL: do not match music to the venue's geographic location — match it to the brand's culture, cuisine, and clientele. The replacement must be meaningfully different from all tracks already listed.
 
 Respond ONLY with a JSON object:
 {
@@ -35,7 +35,7 @@ Respond ONLY with a JSON object:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 300,
         system: 'You are a music track JSON generator. Output ONLY valid JSON. No markdown, no preamble.',
         messages: [{ role: 'user', content: prompt }]

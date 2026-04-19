@@ -52,7 +52,20 @@ Generate the strategy as a JSON object with EXACTLY this structure:
 
 Rules:
 - timeZones: generate 3-5 zones appropriate to the venue's operating hours and type
-- tracks: exactly 5 reference tracks — chosen with surgical precision for THIS specific brand. Consider the venue's cuisine/culture, clientele demographic, geographic market, energy level, and brand positioning. A Latin-Japanese fusion restaurant needs tracks that reflect that fusion. A luxury spa in Riyadh needs completely different tracks to a beach club in Ibiza. Go deep — avoid defaulting to obvious "safe luxury BGM" artists. Draw from the full breadth of your music knowledge: explore subgenres, regional scenes, specific cultural influences relevant to this brand. Each track must have a clear, specific reason why it fits THIS venue and not any other.
+- tracks: exactly 5 reference tracks chosen with surgical precision for THIS specific brand.
+
+CRITICAL MUSIC MATCHING RULES:
+1. Match music to the BRAND IDENTITY and CUISINE — never to the venue's geographic location. An Italian restaurant in Dubai or Calcutta plays Italian music. A Japanese restaurant in London plays Japanese-influenced music.
+2. Draw from the full depth of the relevant musical tradition — classics AND modern. Examples by category:
+   - Italian/Mediterranean: Andrea Bocelli, Frank Sinatra, Dean Martin, Antonino, Bruno Martino, Domenico Modugno, Lucio Battisti, Mina, Eros Ramazzotti, Italian bossa nova, Mediterranean jazz, opera fusion
+   - French: Édith Piaf, Charles Aznavour, Carla Bruni, Zaz, French café jazz, nouvelle chanson
+   - Japanese: Ryuichi Sakamoto, Haruomi Hosono, Japanese city pop, Japanese jazz
+   - Latin: Buena Vista Social Club, Celia Cruz, contemporary Latin jazz, bossa nova
+   - Luxury spa/wellness: Brian Eno, Max Richter, Ólafur Arnalds, ambient classical
+   - Modern urban restaurant: Sade, Massive Attack, Portishead, trip-hop, nu-jazz
+3. Mix classics and contemporary within the tradition — do not only pick obvious hits
+4. Each track must have a clear, specific reason why it fits THIS venue
+
 - Tone throughout: luxury, expert, specific — never generic
 - Respond ONLY with the JSON object, no markdown, no preamble`;
 
@@ -65,7 +78,7 @@ Rules:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 2000,
         system: 'You are a music strategy JSON generator. You ONLY output valid JSON. Never ask questions. Never write conversational text. Never use markdown. Output ONLY the JSON object requested, nothing else.',
         messages: [{ role: 'user', content: prompt }]
